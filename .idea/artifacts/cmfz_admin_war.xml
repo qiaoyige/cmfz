@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cmfz_admin:war">
+    <output-path>$PROJECT_DIR$/cmfz_admin/target</output-path>
+    <root id="archive" name="cmfz_admin.war">
+      <element id="artifact" artifact-name="cmfz_admin:war exploded" />
+    </root>
+  </artifact>
+</component>
