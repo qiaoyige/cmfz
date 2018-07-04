@@ -1,5 +1,7 @@
+<%@page pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <body>
-<h2>Hello World!</h2>
+<%--<h2>Hello World!</h2>--%>
+<% response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/manager/toLogin")); %>
 </body>
 </html>
