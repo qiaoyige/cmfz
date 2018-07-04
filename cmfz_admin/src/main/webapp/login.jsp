@@ -8,21 +8,46 @@
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/icon.css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
 	<link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css"></link>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" type="text/css"></link>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/script/common.js"></script>
 	<script type="text/javascript">
-	
 		$(function(){
+            $("#btn").linkbutton({
+                onClick:function(){
+                    $("#loginForm").form("submit",{
+                        url:"${pageContext.request.contextPath}/manager/login",
+                        onSubmit:function(){
+                            return $("#loginForm").form("validate");
+                        },
+                        success:function(data){
+                            console.log(data);
+                            var res=JSON.parse(data);
+                            console.log(res);
+                            if(res=="success"){
+                                window.location.href="${pageContext.request.contextPath}/main.jsp";
+							}else{
+                                $.messager.alert('我的消息',data,'info');
+                            }
 
+                        }
+
+                    });
+                }
+
+            });
         });
 	</script>
 </head>
 <body>
 		<div class="login">
-			<form id="loginForm" action="<c:url value="/manager/login"/>" method="post" >
+			<form id="loginForm"  method="post" >
 				
 				<table>
 					<tbody>
@@ -71,7 +96,7 @@
 						<td>&nbsp;</td>
 						<th>&nbsp;</th>
 						<td>
-							<input type="button" class="homeButton" value="" onclick="location.href='/'"><input type="submit" class="loginButton" value="登录">
+							<input type="button" class="homeButton" value="" onclick="location.href='/'"><input id="btn" type="button" class="loginButton" value="登录">
 						</td>
 					</tr>
 				</tbody></table>
