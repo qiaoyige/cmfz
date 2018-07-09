@@ -1,12 +1,17 @@
 package com.qyg.cmfz.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONType;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Picture {
+public class Picture implements Serializable {
 
   private String pictureId;
   private String picturePath;
+  @JSONField(format="yyyy-MM-dd hh:mm:ss")
   private Date pictureDate;
   private String pictureDescription;
   private String pictureStatus;

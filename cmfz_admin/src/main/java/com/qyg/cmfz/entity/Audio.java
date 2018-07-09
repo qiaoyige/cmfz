@@ -1,7 +1,9 @@
 package com.qyg.cmfz.entity;
 
 
-public class Audio {
+import java.io.Serializable;
+
+public class Audio implements Serializable {
 
   private String audioId;
   private String audioName;

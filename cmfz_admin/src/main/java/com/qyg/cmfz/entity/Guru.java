@@ -1,11 +1,19 @@
 package com.qyg.cmfz.entity;
 
 
-public class Guru {
+import cn.afterturn.easypoi.excel.annotation.Excel;
 
+import java.io.Serializable;
+
+public class Guru implements Serializable {
+
+  @Excel(name = "编号",orderNum="0")
   private String masterId;
+  @Excel(name = "姓名",orderNum="1")
   private String masterName;
+  @Excel(name = "照片",orderNum="2")
   private String masterPhoto;
+  @Excel(name = "简介",orderNum="3")
   private String masterSummary;
 
 

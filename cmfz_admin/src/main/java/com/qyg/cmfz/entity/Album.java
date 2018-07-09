@@ -1,9 +1,10 @@
 package com.qyg.cmfz.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Album {
+public class Album implements Serializable{
 
   private String id;
   private String albumName;

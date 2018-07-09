@@ -33,7 +33,7 @@
                             if(res=="success"){
                                 window.location.href="${pageContext.request.contextPath}/main.jsp";
 							}else{
-                                $.messager.alert('我的消息',data,'info');
+                                $.messager.alert('我的消息',res,'info');
                             }
 
                         }

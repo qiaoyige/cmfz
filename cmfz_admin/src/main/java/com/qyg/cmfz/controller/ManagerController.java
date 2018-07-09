@@ -53,7 +53,6 @@ public class ManagerController {
                     }
             }
         }
-        System.out.println(name);
         return "login";
 
     }
@@ -68,7 +67,7 @@ public class ManagerController {
     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public @ResponseBody String login(@RequestParam("mgrName") String name, @RequestParam("mgrPwd") String pwd, String enCode, HttpSession session, HttpServletResponse response, String remenberName) throws UnsupportedEncodingException {
-       String message="";
+        String message="";
         String vcode = (String) session.getAttribute("vcode");
         Manager manager = managerService.loginManager(name, pwd);
 
@@ -111,6 +110,13 @@ public class ManagerController {
 
         va.write(response.getOutputStream());
 
+    }
+    @RequestMapping("/exit")
+    public String  exit(HttpSession session){
+
+        session.removeAttribute("manager");
+
+        return "login";
     }
 
 }

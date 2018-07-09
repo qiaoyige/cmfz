@@ -1,8 +1,9 @@
 package com.qyg.cmfz.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Counter {
+public class Counter implements Serializable {
   private String id;
   private String counterName;
   private Integer count;
