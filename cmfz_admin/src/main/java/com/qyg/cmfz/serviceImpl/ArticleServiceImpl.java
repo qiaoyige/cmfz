@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Description
  * @Author gege
@@ -26,5 +30,17 @@ public class ArticleServiceImpl implements ArticleService{
         }else{
             return false;
         }
+    }
+
+    @Override
+    public Map<String, Object> queryAllArticle(Integer page, Integer rows) {
+
+        List<Article> articles = articleDao.selectAllArticle((page - 1) * rows, rows);
+
+        Integer countArticle = articleDao.selectCountArticle();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("total",countArticle);
+        map.put("rows",articles);
+        return map;
     }
 }

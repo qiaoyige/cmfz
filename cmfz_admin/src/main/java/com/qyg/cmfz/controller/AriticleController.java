@@ -13,9 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Description
@@ -29,11 +27,9 @@ public class AriticleController {
     @Autowired
     private ArticleService articleService;
     private ArrayList<String> data = new ArrayList<String>();
-    ;
 
     @RequestMapping("/addContent")
-    public @ResponseBody
-    RichTextResult addContent(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+    public @ResponseBody RichTextResult addContent(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
 
         RichTextResult result = new RichTextResult();
 
@@ -61,10 +57,9 @@ public class AriticleController {
     }
 
     @RequestMapping("/createArticle")
-    public @ResponseBody
-    String createArticle(Article article) {
+    public @ResponseBody String createArticle(Article article) {
 
-        if (article.getArticleTitle()==null&&article.getIntroduction()==null){
+        if (article.getArticleTitle()!=null||article.getIntroduction()!=null){
             String id = UUID.randomUUID().toString().replace("-", "");
             Date date = new Date();
             article.setArticleId(id);
@@ -81,6 +76,16 @@ public class AriticleController {
         }else{
             return "添加失败";
         }
+    }
+
+    @RequestMapping("/showAllArticle")
+    public @ResponseBody Map<String,Object> showAllArticle(Integer page,Integer rows){
+        Map<String, Object> map = articleService.queryAllArticle(page, rows);
+        List<Article> rows1 = (List<Article>) map.get("rows");
+        for (Article article : rows1) {
+            System.out.println(article);
+        }
+        return map;
     }
 
 }

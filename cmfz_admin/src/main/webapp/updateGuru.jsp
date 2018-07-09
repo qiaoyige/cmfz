@@ -25,7 +25,7 @@
 <form id="changeGuru" method="post" enctype="multipart/form-data">
     <table align="center">
         <input type="hidden" name="masterId" style="display: none"/>
-        <<input type="hidden" name="masterPhoto" style="display: none">
+        <input type="hidden" name="masterPhoto" style="display: none">
         <tr>
             <td>上师法名:</td>
             <td><input class="easyui-textbox" name="masterName" /></td>

@@ -154,8 +154,8 @@
         <a id="add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增上师'"></a>
         <a id="editGuru" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改上师信息'"></a>
         <input id="ss" class="easyui-searchbox" style="width:300px" data-options="searcher:qq,prompt:'请您输入需要模糊查询的内容',menu:'#mm'"></input>
-        <a id="addMany" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'批量插入'"></a>
-        <a id="expor" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'导出表格'"></a>
+        <a id="addMany" class="easyui-linkbutton" data-options="iconCls:'icon-folder_up',plain:true,text:'批量插入'"></a>
+        <a id="expor" class="easyui-linkbutton" data-options="iconCls:'icon-note_go',plain:true,text:'导出表格'"></a>
 
         <div id="mm" style="width:120px">
             <div data-options="name:'name',iconCls:'icon-ok'">法名</div>

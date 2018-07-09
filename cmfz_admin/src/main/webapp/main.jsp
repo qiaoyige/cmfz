@@ -11,7 +11,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/columns-ext.js"></script>
+    <script type="text/javascript">
 
     function addTab(menuName,menuUrl){
         console.log(menuName);

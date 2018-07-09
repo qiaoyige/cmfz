@@ -14,6 +14,10 @@
                 valueField:"masterId",
                 textField:"masterName",
                 width:100,
+                onSelect: function(rec){
+                    console.log(rec);
+                    $("#guruN").val(rec.masterName);
+                }
             });
 
             $("#addA").linkbutton({
@@ -39,9 +43,9 @@
                                 $.messager.alert("信息",temp);
                             }
 
-                            /*$("#showAllGuru").datagrid("reload",{
-                                href:"/guru/showAllGuru"
-                            });*/
+                            $("#showAllArticle").datagrid("reload",{
+                                href:"${pageContext.request.contextPath}/article/showAllArticle"
+                            });
                         },
                     });
                 }
@@ -51,6 +55,7 @@
                 iconCls:"icon-bullet_cross",
                 onClick:function(){
                     $('#addArticle').form("reset");
+                    editor.txt.html("");
                 }
             });
         });
@@ -64,6 +69,7 @@
     <table align="center">
         <input  type="hidden"  name="mainPic" />
         <input  type="hidden"  name="introduction" id="introduction"/>
+        <input  type="hidden"  name="guruName" id="guruN"/>
         <tr>
             <td>文章标题:</td>
             <td><input class="easyui-textbox" name="articleTitle"/></td>
@@ -78,7 +84,7 @@
         </tr>
         <tr>
             <td>文章状态:</td>
-            <td><input  class="easyui-switchbutton"  name="articleStatus" data-options="onText:'上架',offText:'下架'" /></td>
+            <td><input  class="easyui-switchbutton" id="astatus" name="articleStatus" data-options="onText:'上架',offText:'下架'" /></td>
         </tr>
         <tr>
             <td colspan="2">文章内容:</td>
