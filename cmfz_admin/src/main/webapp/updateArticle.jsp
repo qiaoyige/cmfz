@@ -9,6 +9,8 @@
 
     <script type="text/javascript">
         $(function(){
+            $("#editor").html(getInfo());
+
             $("#aName").combobox({
                 url:"${pageContext.request.contextPath}/guru/articleAuthor",
                 valueField:"masterId",
@@ -20,14 +22,14 @@
                 }
             });
 
-            $("#addA").linkbutton({
+            $("#updateA").linkbutton({
                 onClick:function(){
                     var temp=editor.txt.html();
                     $("#introduction").val(temp);
-                    $('#addArticle').form("submit",{
+                    $('#upArticle').form("submit",{
                         url:"${pageContext.request.contextPath}/article/createArticle",
                         onSubmit:function(){
-                            return $("#addArticle").form("validate");
+                            return $("#upArticle").form("validate");
                         },
                         success:function(data){
                             var temp=JSON.parse(data);
@@ -44,9 +46,8 @@
                             }
 
                             $("#showAllArticle").datagrid("reload",{
-                                href:""
+                                href:"${pageContext.request.contextPath}/article/showAllArticle"
                             });
-                            /*window.location.href="${pageContext.request.contextPath}/article/showAllArticle";*/
                         },
                     });
                 }
@@ -55,18 +56,18 @@
             $("#cancleA").linkbutton({
                 iconCls:"icon-bullet_cross",
                 onClick:function(){
-                    $('#addArticle').form("reset");
+                    $('#upArticle').form("reset");
                     editor.txt.html("");
                 }
             });
         });
 
-        function test() {
-            alert(editor.txt.html());
-        }
+       /* function test() {
+            $("#editor").html(getInfo())
+        }*/
     </script>
 
-<form id="addArticle" method="post" enctype="multipart/form-data" style="width: 800px;height: 500px;margin-left: 20px">
+<form id="upArticle" method="post" enctype="multipart/form-data" style="width: 800px;height: 500px;margin-left: 20px">
     <table align="center">
         <input  type="hidden"  name="mainPic" />
         <input  type="hidden"  name="introduction" id="introduction"/>
@@ -92,7 +93,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <div id="editor" style="width: 800px;height: 200px" >
+                <div id="editor"  style="width: 800px;height: 200px" >
                     <%--<p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>--%>
                 </div>
             </td>
@@ -100,7 +101,7 @@
     </table>
 
 </form>
-<button id="addA">创建文章</button>
+<button id="updateA">修改文章</button>
 <button id="cancleA">重置文章</button>
 
 <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->

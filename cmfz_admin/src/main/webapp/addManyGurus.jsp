@@ -67,7 +67,6 @@
     <table align="center">
         <tr>
             <td>请选择Excel表格:</td>
-            <td>请选择Excel表格:</td>
             <td><input  id="fb"  name="myfile" /></td>
         </tr>
         <tr>

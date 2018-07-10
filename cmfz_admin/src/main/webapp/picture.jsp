@@ -63,52 +63,49 @@
         $("#edit").linkbutton({
             onClick:function(){
                 var select=$("#showAll").datagrid("getSelected");
-
-                $("#updateTable").dialog({
-                    title: 'Update Picture',
-                    width: 400,
-                    height: 200,
-                    title : "修改轮播图",
-                    collapsible : true,
-                    minimizable : true,
-                    maximizable : true,
-                    resizable : true,
-                    href: "${pageContext.request.contextPath}/updatePicture.jsp",
-                    onLoad:function(){
-                        $("#updateTable").form("load",select);
-                    },
-                    buttons:[{
-                        text:'提交',
-                        handler:function(){
-                            $("#updatePicture").form("submit",{
-                                url:"${pageContext.request.contextPath}/picture/update",
-                                onSubmit:function(){
-                                    return $("#updatePicture").form("validate");
-                                },
-                                success:function(data){
-                                    console.log(data);
-                                    var result=JSON.parse(data);
-
-                                    if(result=="修改成功"){
+                if(select){
+                    $("#updateTable").dialog({
+                        title: 'Update Picture',
+                        width: 400,
+                        height: 200,
+                        title : "修改轮播图",
+                        collapsible : true,
+                        minimizable : true,
+                        maximizable : true,
+                        resizable : true,
+                        href: "${pageContext.request.contextPath}/updatePicture.jsp",
+                        onLoad:function(){
+                            $("#updateTable").form("load",select);
+                        },
+                        buttons:[{
+                            text:'提交',
+                            handler:function(){
+                                $("#updatePicture").form("submit",{
+                                    url:"${pageContext.request.contextPath}/picture/update",
+                                    onSubmit:function(){
+                                        return $("#updatePicture").form("validate");
+                                    },
+                                    success:function(data){
+                                        console.log(data);
+                                        var result=JSON.parse(data);
 
                                         $("#updateTable").dialog("close");
 
                                         $("#showAll").datagrid("reload",{
                                             href:"${pageContext.request.contextPath}/picture/showAllPicture"
                                         });
-                                        $.messager.alert("信息","请刷新页面");
-                                    }else{
-                                        $("#updateTable").dialog("close");
+                                        /* $.messager.alert("信息","请刷新页面");*/
                                         $.messager.alert("信息",result);
+
                                     }
-                                }
 
-                            });
-                        }
-                    }]
-
-
-                });
+                                });
+                            }
+                        }]
+                    });
+                }else{
+                    $.messager.alert("信息","请选择修改对象");
+                }
             }
         });
     });

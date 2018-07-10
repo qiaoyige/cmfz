@@ -78,9 +78,7 @@ public class LogListener {
             result="fail";
             throwable.printStackTrace();
         }
-        if(user==null){
-            result="false";
-        }
+
         Log log=new Log(id,user,date,resource,action,message,result);
         logService.appendLog(log);
         return obj;

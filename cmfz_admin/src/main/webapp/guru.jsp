@@ -60,52 +60,51 @@
         $("#editGuru").linkbutton({
             onClick:function(){
                 var select=$("#showAllGuru").datagrid("getSelected");
-
-                $("#updateTable").dialog({
-                    title: 'Update Guru',
-                    width: 400,
-                    height: 200,
-                    title : "修改上师信息",
-                    collapsible : true,
-                    minimizable : true,
-                    maximizable : true,
-                    resizable : true,
-                    href: "${pageContext.request.contextPath}/updateGuru.jsp",
-                    onLoad:function(){
-                        $("#updateTable").form("load",select);
-                    },
-                    buttons:[{
-                        text:'提交',
-                        handler:function(){
-                            $("#changeGuru").form("submit",{
-                                url:"${pageContext.request.contextPath}/guru/change",
-                                onSubmit:function(){
-                                    return $("#changeGuru").form("validate");
-                                },
-                                success:function(data){
-                                    console.log(data);
-                                    var result=JSON.parse(data);
-
-                                    if(result=="修改成功"){
+                if(select){
+                    $("#updateTable").dialog({
+                        title: 'Update Guru',
+                        width: 400,
+                        height: 200,
+                        title : "修改上师信息",
+                        collapsible : true,
+                        minimizable : true,
+                        maximizable : true,
+                        resizable : true,
+                        href: "${pageContext.request.contextPath}/updateGuru.jsp",
+                        onLoad:function(){
+                            $("#updateTable").form("load",select);
+                        },
+                        buttons:[{
+                            text:'提交',
+                            handler:function(){
+                                $("#changeGuru").form("submit",{
+                                    url:"${pageContext.request.contextPath}/guru/change",
+                                    onSubmit:function(){
+                                        return $("#changeGuru").form("validate");
+                                    },
+                                    success:function(data){
+                                        console.log(data);
+                                        var result=JSON.parse(data);
 
                                         $("#updateTable").dialog("close");
 
                                         $("#showAllGuru").datagrid("reload",{
                                             href:"${pageContext.request.contextPath}/guru/showAllGuru"
                                         });
-                                        $.messager.alert("信息","请刷新页面");
-                                    }else{
-                                        $("#updateTable").dialog("close");
+                                        /*$.messager.alert("信息","请刷新页面");*/
                                         $.messager.alert("信息",result);
                                     }
-                                }
 
-                            });
-                        }
-                    }]
+                                });
+                            }
+                        }]
 
 
-                });
+                    });
+                }else{
+                    $.messager.alert("信息","请选择上师");
+                }
+
 
 
             }

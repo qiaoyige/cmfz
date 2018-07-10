@@ -81,25 +81,21 @@ public class GuruController {
     @RequestMapping("/change")
     public @ResponseBody String change(Guru guru, @RequestParam("myfile") MultipartFile myFile, HttpSession session) throws IOException {
 
-        if("".equals(guru.getMasterId())){
-            return "请选择修改对象";
-        }else{
-            System.out.println("jinru");
-            if(!myFile.isEmpty()){
-                String realPath=session.getServletContext().getRealPath("");
+        if(!myFile.isEmpty()){
+            String realPath=session.getServletContext().getRealPath("");
 
-                int lastIndexOf = realPath.lastIndexOf("\\");
+            int lastIndexOf = realPath.lastIndexOf("\\");
 
-                String uploadPath = realPath.substring(0, lastIndexOf)+"/"+"upload/guru";
+            String uploadPath = realPath.substring(0, lastIndexOf)+"/"+"upload/guru";
 
-                String path=uploadPath+"/"+guru.getMasterPhoto();
+            String path=uploadPath+"/"+guru.getMasterPhoto();
 
-                myFile.transferTo(new File(path));
+            myFile.transferTo(new File(path));
 
-            }
-            guruService.modifyGuru(guru);
-            return "修改成功";
         }
+        guruService.modifyGuru(guru);
+        return "修改成功";
+
     }
 
 

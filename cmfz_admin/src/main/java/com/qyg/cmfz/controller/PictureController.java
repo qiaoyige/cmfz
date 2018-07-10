@@ -70,26 +70,22 @@ public class PictureController {
 
     @RequestMapping("/update")
     public @ResponseBody  String update(Picture picture,@RequestParam("myfile") MultipartFile myFile,HttpSession session) throws IOException {
-        if(picture.getPictureId().equals("")){
-            return "请选择修改对象";
-        }else{
-            if(!myFile.isEmpty()){
 
-                String realPath=session.getServletContext().getRealPath("");
+        if(!myFile.isEmpty()){
 
-                int lastIndexOf = realPath.lastIndexOf("\\");
+            String realPath=session.getServletContext().getRealPath("");
 
-                String uploadPath = realPath.substring(0, lastIndexOf)+"/"+"upload";
+            int lastIndexOf = realPath.lastIndexOf("\\");
 
-                String path=uploadPath+"/"+picture.getPicturePath();
+            String uploadPath = realPath.substring(0, lastIndexOf)+"/"+"upload";
 
-                myFile.transferTo(new File(path));
+            String path=uploadPath+"/"+picture.getPicturePath();
 
-            }
-            picture.setPictureDate(new Date());
-            pictureService.modifyPicture(picture);
-            return "修改成功";
+            myFile.transferTo(new File(path));
+
         }
-
+        picture.setPictureDate(new Date());
+        pictureService.modifyPicture(picture);
+        return "修改成功";
     }
 }

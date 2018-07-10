@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <script type="text/javascript">
-
+    var info;
     $(function(){
         $("#showAllArticle").datagrid({
             width:1100,
@@ -24,89 +24,73 @@
                 {field:"articleStatus",title:"状态",width:30},
                 {field:"date",title:"创建时间",width:30},
                 {field:"guruName",title:"所属上师",width:30},
-                {field:'operation',title:'操作',width:50,align:'left',formatter:formatter_status}
+                {field:'opt',title:'操作',width:50,align:'center',
+                    formatter:function(value,rec,index){
+                        var btn = '<a class="detial" onclick="detialRow('+index+')">文章详情</a>' +
+                            '<a class="editcls" onclick="editRow('+index+')">修改内容</a>';
+                        return btn;
+                    }
+                }
 
             ]],
             toolbar:"#oparticle",
             pagination:true,
             pageSize:4,
             pageList:[2,4,6],
-        });
-
-
-        $("#editArticle").linkbutton({
-            onClick:function(){
-                var select=$("#showAllGuru").datagrid("getSelected");
-
-                $("#updateTable").dialog({
-                    title: 'Update Guru',
-                    width: 400,
-                    height: 200,
-                    title : "修改上师信息",
-                    collapsible : true,
-                    minimizable : true,
-                    maximizable : true,
-                    resizable : true,
-                    href: "${pageContext.request.contextPath}/updateGuru.jsp",
-                    onLoad:function(){
-                        $("#updateTable").form("load",select);
-                    },
-                    buttons:[{
-                        text:'提交',
-                        handler:function(){
-                            $("#changeGuru").form("submit",{
-                                url:"${pageContext.request.contextPath}/guru/change",
-                                onSubmit:function(){
-                                    return $("#changeGuru").form("validate");
-                                },
-                                success:function(data){
-                                    console.log(data);
-                                    var result=JSON.parse(data);
-
-                                    if(result=="修改成功"){
-
-                                        $("#updateTable").dialog("close");
-
-                                        $("#showAllGuru").datagrid("reload",{
-                                            href:"${pageContext.request.contextPath}/guru/showAllGuru"
-                                        });
-                                        $("#showAlllog").datagrid("reload",{
-                                            href:"${pageContext.request.contextPath}/log/showAllLog"
-                                        });
-                                        $.messager.alert("信息","请刷新页面");
-                                    }else{
-                                        $("#updateTable").dialog("close");
-                                        $.messager.alert("信息",result);
-                                    }
-                                }
-
-                            });
-                        }
-                    }]
-
-
-                });
-
-
+            onLoadSuccess:function(data){
+                $('.detial').linkbutton({text:'文章详情',iconCls:'icon-table_save'});
+                $('.editcls').linkbutton({text:'修改内容',iconCls:'icon-edit'});
             }
         });
 
-
-
     });
-    function formatter_status(val,row,index){
-        return '<a class="easyui-linkbutton" data-options=\"iconCls:"icon-edit"\" rel="external nofollow" onclick="modifyArticle('+index+')">修改内容</a>';
-    }
+    function detialRow(index){
+        $("#showAllArticle").datagrid('selectRow',index);// 关键在这里
+        var row = $('#showAllArticle').datagrid('getSelected');
+        console.log(row.introduction);
+        info = row.introduction;
+        $("#articleTable").dialog({
+            title : "文章详情",
+            width: 600,
+            height: 400,
+            collapsible : true,
+            minimizable : true,
+            maximizable : true,
+            resizable : true,
+            href: "${pageContext.request.contextPath}/articleDetail.jsp",
+        });
 
-    function modifyArticle(index){
-        console.log(index);
+
+    }
+    function editRow(index){
+        $("#showAllArticle").datagrid('selectRow',index);// 关键在这里
+        var row = $('#showAllArticle').datagrid('getSelected');
+        console.log(row);
+        $("#updateTable").dialog({
+            title : "文章详情",
+            width: 600,
+            height: 400,
+            collapsible : true,
+            minimizable : true,
+            maximizable : true,
+            resizable : true,
+            href: "${pageContext.request.contextPath}/updateArticle.jsp",
+            onLoad:function(){
+                $("#upArticle").form("load",row);
+            },
+        });
+
+    }
+    function getInfo() {
+        console.log(info);
+        return info;
     }
 
 
 </script>
 <table id="showAllArticle"></table>
 
-<table id="addTable"></table>
+<table id="articleTable"></table>
 <table id="updateTable"></table>
 
 <div id="dgguru">
