@@ -3,6 +3,12 @@ package com.qyg.cmfz.controller;
 import com.qyg.cmfz.entity.Manager;
 import com.qyg.cmfz.service.ManagerService;
 import com.qyg.cmfz.utils.CreateValidateCode;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,8 +72,8 @@ public class ManagerController {
     *@Return java.lang.String
     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public @ResponseBody String login(@RequestParam("mgrName") String name, @RequestParam("mgrPwd") String pwd, String enCode, HttpSession session, HttpServletResponse response, String remenberName) throws UnsupportedEncodingException {
-        String message="";
+    public @ResponseBody String login(@RequestParam("mgrName") String name, @RequestParam("mgrPwd") String pwd, String enCode, HttpSession session, HttpServletResponse response, boolean rememberName) throws UnsupportedEncodingException {
+        /*String message="";
         String vcode = (String) session.getAttribute("vcode");
         Manager manager = managerService.loginManager(name, pwd);
 
@@ -76,7 +82,7 @@ public class ManagerController {
         }else if(manager!=null){
             session.setAttribute("manager", manager);
 
-            if(remenberName!=null){
+            if(remenberName){
                 String managerName=manager.getMgrName();
                 String encode = URLEncoder.encode(managerName,"UTF-8");
                 Cookie cookie =new Cookie("cookName",encode);
@@ -87,6 +93,32 @@ public class ManagerController {
            message="success";
         }else{
             message="账户或密码错误";
+        }
+        return message;*/
+
+        String message="";
+        // 在web环境中安全管理器会自动进行初始化
+        String vcode = (String) session.getAttribute("vcode");
+        if(enCode==null || enCode.isEmpty()|| !vcode.equalsIgnoreCase(enCode)){
+            message="验证码错误";
+        }else{
+            Subject subject = SecurityUtils.getSubject();
+            try {
+                subject.login(new UsernamePasswordToken(name,pwd,rememberName));
+                session.setAttribute("name",name);
+                // 编程式授权
+                System.out.println(subject.hasRole("root") ? "有root角色":"无root角色");
+                message="success";
+            } catch (UnknownAccountException e) {
+                e.printStackTrace();
+                message="账户不存在";
+            } catch (IncorrectCredentialsException ice){
+                ice.printStackTrace();
+                message="密码不正确";
+            } catch (AuthenticationException ae){
+                ae.printStackTrace();
+                return "redirect:/login.jsp";
+            }
         }
         return message;
     }

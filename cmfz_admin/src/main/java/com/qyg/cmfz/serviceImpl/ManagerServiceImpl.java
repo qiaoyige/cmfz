@@ -34,4 +34,9 @@ public class ManagerServiceImpl implements ManagerService {
         }
         return null;
     }
+
+    @Override
+    public Manager queryUserByName(String name) {
+        return managerDao.selectByName(name);
+    }
 }

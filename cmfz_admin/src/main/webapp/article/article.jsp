@@ -57,7 +57,7 @@
             minimizable : true,
             maximizable : true,
             resizable : true,
-            href: "${pageContext.request.contextPath}/articleDetail.jsp",
+            href: "${pageContext.request.contextPath}/article/articleDetail.jsp",
         });
 
 
@@ -74,7 +74,7 @@
             minimizable : true,
             maximizable : true,
             resizable : true,
-            href: "${pageContext.request.contextPath}/updateArticle.jsp",
+            href: "${pageContext.request.contextPath}/article/updateArticle.jsp",
             onLoad:function(){
                 $("#upArticle").form("load",row);
             },

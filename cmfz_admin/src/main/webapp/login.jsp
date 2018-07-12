@@ -88,7 +88,7 @@
 						</th>
 						<td>
 							<label>
-								<input type="checkbox" id="isRememberUsername" name="remenberName" value="true"/> 记住用户名
+								<input type="checkbox" id="isRememberUsername" name="rememberName" value="true"/>七天免登陆 <%--记住用户名--%>
 							</label>
 						</td>
 					</tr>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <script type="text/javascript">
 
     $(function(){
@@ -34,4 +35,6 @@
     });
 
 </script>
-<table id="showAlllog"></table>
+<shiro:hasAnyRoles name="admin,root">
+    <table id="showAlllog"></table>
+</shiro:hasAnyRoles>

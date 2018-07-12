@@ -43,4 +43,6 @@
 
     <!-- 使用aspectj 风格aop -->
     <aop:aspectj-autoproxy/>
+
+    <import resource="applicationContext-shiro.xml"></import>
 </beans>

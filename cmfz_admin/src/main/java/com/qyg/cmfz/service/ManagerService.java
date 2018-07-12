@@ -18,4 +18,14 @@ public interface ManagerService {
     *@Return com.qyg.cmfz.entity.Manager
     */
     public Manager loginManager(String name,String password);
+    
+    /**
+    *@Description  认证时需要
+    *@Author gege
+    *@Time  2018/7/12 12:38
+    *@Param [name]
+    *@Exception
+    *@Return com.qyg.cmfz.entity.Manager
+    */
+    public Manager queryUserByName(String name);
 }

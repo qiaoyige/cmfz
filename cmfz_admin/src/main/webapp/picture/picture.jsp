@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <script type="text/javascript">
 
     $(function(){
@@ -54,7 +55,7 @@
                     minimizable : true,
                     maximizable : true,
                     resizable : true,
-                    href: "${pageContext.request.contextPath}/addPicture.jsp",
+                    href: "${pageContext.request.contextPath}/picture/addPicture.jsp",
 
                 });
             }
@@ -73,7 +74,7 @@
                         minimizable : true,
                         maximizable : true,
                         resizable : true,
-                        href: "${pageContext.request.contextPath}/updatePicture.jsp",
+                        href: "${pageContext.request.contextPath}/picture/updatePicture.jsp",
                         onLoad:function(){
                             $("#updateTable").form("load",select);
                         },
@@ -118,9 +119,13 @@
 
 <div id="dgp">
     <div id="oppicture" style="display:none">
-        <a id="add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增轮播图'"></a>
-        <a id="help" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true,text:'帮助'"></a>
-        <a id="edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改'"></a>
+        <shiro:hasPermission name="user:add">
+            <a id="add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增轮播图'"></a>
+            <a id="help" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true,text:'帮助'"></a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="user:modify">
+            <a id="edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改'"></a>
+        </shiro:hasPermission>
 
     </div>
 

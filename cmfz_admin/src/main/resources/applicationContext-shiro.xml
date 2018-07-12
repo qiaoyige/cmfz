@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--shiro的过滤器工厂对象   负责权限的校验  处理请求的bean-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"></property>
+        <!--登录页的URL地址-->
+        <property name="loginUrl" value="/login.jsp"></property>
+        <property name="unauthorizedUrl" value="/error.jsp"></property>
+        <property name="filterChainDefinitions">
+            <!--定义过滤器链的拦截规则-->
+            <value>
+                /manager/login=anon
+                /manager/register=anon
+                /manager/validate=anon
+                /css/**=anon
+                /img/**=anon
+                /image/**=anon
+                /js/**=anon
+                /script/**=anon
+                /themes/**=anon
+                /main.jsp=user
+                /system/log.jsp=roles[root]
+                /system/perponManager=perms[system:query]
+                /**=user
+            </value>
+        </property>
+    </bean>
+
+
+    <!--初始化安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms" >
+            <list>
+                <ref bean="myRealm"></ref>
+            </list>
+        </property>
+        <property name="rememberMeManager" ref="rememberMeManager"></property>
+    </bean>
+
+    <!--声明记住我管理器 实现记住我功能-->
+    <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager" id="rememberMeManager">
+        <property name="cookie" ref="simpleCookie"></property>
+    </bean>
+
+    <bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!--cookie名称-->
+        <property name="name" value="rm"></property>
+        <property name="maxAge" value="604800"/>
+        <property name="path" value="/"/>
+    </bean>
+
+    <bean class="com.qyg.cmfz.utils.MyRealm" id="myRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+    </bean>
+
+    <!--声明复杂的凭证匹配器-->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="512"></property>
+    </bean>
+</beans>

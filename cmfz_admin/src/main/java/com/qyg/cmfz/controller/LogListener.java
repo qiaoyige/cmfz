@@ -40,9 +40,9 @@ public class LogListener {
         //获取session,进而获取操作对象
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
-        Manager manager = (Manager) session.getAttribute("manager");
-        String user=manager.getMgrName();
-
+       /* Manager manager = (Manager) session.getAttribute("manager");
+        String user=manager.getMgrName();*/
+        String user = (String) session.getAttribute("name");
         Date date=new Date();
 
         Class clazz = pjp.getTarget().getClass();
