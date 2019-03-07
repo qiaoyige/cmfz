@@ -26,7 +26,8 @@
             view: detailview,
             detailFormatter: function(rowIndex, rowData){
                 return '<table><tr>' +
-                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/guru/'+rowData.masterPhoto +'" style="height:150px;"></td>' +
+                    //'<td rowspan=2 style="border:0"><img src="/upload/guru/'+rowData.masterPhoto +'" style="height:150px;"></td>' +
+                    '<td rowspan=2 style="border:0"><img src="http://192.168.214.131/'+rowData.masterPhoto +'" style="height:150px;"></td>' +
                     '<td style="border:0">' +
                     '<p>Attribute: ' + rowData.masterName+ '</p>' +
                     '<p>Status: ' + rowData.masterSummary + '</p>' +

@@ -9,6 +9,12 @@ import com.alibaba.fastjson.JSON;
 import com.qyg.cmfz.entity.Guru;
 import com.qyg.cmfz.service.GuruService;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.csource.common.MyException;
+import org.csource.common.NameValuePair;
+import org.csource.fastdfs.ClientGlobal;
+import org.csource.fastdfs.StorageClient;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,12 +53,12 @@ public class GuruController {
         return guruService.queryAll(page,rows);
     }*/
     @RequestMapping("/add")
-    public @ResponseBody String add(Guru guru, @RequestParam("myfile") MultipartFile myFile, HttpSession session) throws IOException {
+    public @ResponseBody String add(Guru guru, @RequestParam("myfile") MultipartFile myFile, HttpSession session) throws IOException, MyException {
 
         String id= UUID.randomUUID().toString().replace("-","");
         guru.setMasterId(id);
 
-        String realPath=session.getServletContext().getRealPath("");
+        /*String realPath=session.getServletContext().getRealPath("");
         if(!myFile.isEmpty()){
             int lastIndexOf = realPath.lastIndexOf("\\");
 
@@ -70,6 +76,36 @@ public class GuruController {
             myFile.transferTo(new File(path));
 
             guru.setMasterPhoto(uuidName+fileName);
+
+            guruService.addGuru(guru);
+            return "添加成功";
+        }else{
+            return "添加失败";
+        }*/
+        String realPath=session.getServletContext().getRealPath("");
+        if(!myFile.isEmpty()){
+            //获取文件名
+            String originalFilename = myFile.getOriginalFilename();
+
+            //文件名后缀
+            String fileName=originalFilename.substring(originalFilename.indexOf(".")+1);
+
+            ClientGlobal.init("fdfs_client.conf");
+            TrackerClient trackerClient=new TrackerClient();
+            TrackerServer trackerServer=trackerClient.getConnection();
+
+            //通过StorageClient完成文件的上传、下载等操作
+            StorageClient  storageClient = new StorageClient(trackerServer, null);
+
+            byte[] bytes = myFile.getBytes();
+
+            String[] jpgs = storageClient.upload_file(bytes,fileName,new NameValuePair[]{new NameValuePair("width","150"),new NameValuePair("height","150")});
+
+            for (String jpg : jpgs) {
+                System.out.println(jpg);
+            }
+
+            guru.setMasterPhoto(jpgs[0]+"/"+jpgs[1]);
 
             guruService.addGuru(guru);
             return "添加成功";

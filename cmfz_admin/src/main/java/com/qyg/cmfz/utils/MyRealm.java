@@ -35,6 +35,7 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("--------------------============");
         String  username = (String) principalCollection.getPrimaryPrincipal();
         if(username!=null){
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
